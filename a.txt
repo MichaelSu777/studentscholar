@@ -1,0 +1,48 @@
+<?php
+    session_start(); //begins user session via c o o k i e s
+    require("connect.php"); // connects to database
+ 
+    if ($_SESSION["username"]){ //if user session = username then go to the page. else break
+    $user_username = $_SESSION["username"]; // set variable to the session when user session is confirmed
+    $classurl = $_GET['url'];//gets url
+    
+    $currentClass = mysqli_query($con, "SELECT * FROM `classes` WHERE class_type='".$classurl."'"); //creates query of current class
+    while ($classQuery = mysqli_fetch_assoc($currentClass)){
+        $class_id=$classQuery['id'];
+        $class_type = $classQuery['class_type'];
+        $teacherName = ucwords(str_replace("_", "", strstr($class_type, '_'))); //remove everything behind _, then replace _ with nothing, then capitalize ucwords    
+    }
+    if ($classurl == $class_id){ // checks for url (will change url format later)
+
+    $check_u = mysqli_query($con, "SELECT * FROM users WHERE email='".$user_username."'"); //gets logged in user
+    $check_d = mysqli_query($con, $sql = "SELECT * FROM `classes`"); //select data from classes database
+    
+    //Get's URL. /school?url=1/class?url=calculusbc
+    //school?url=1/class?url=calculusbc_bolden
+
+    while ($row_d = mysqli_fetch_assoc($check_d)){ //fetches data from database
+        $school = $row_d['school_name']; //replace this with the school name from the school's database.
+        $class = $row_d['name'];
+        $teachercode = $row_d['class_type'];
+        
+        $teacherfinal = ucwords(str_replace("_", "", strstr($row_d['class_type'], '_'))); //remove everything behind _, then replace _ with nothing, then capitalize ucwords
+        //loop through teacher database
+        //if teacherfinal != null, then add it to array
+        //add teacher final to new array
+    }
+    
+    while ($row_u = mysqli_fetch_assoc($check_u)){
+        $fname = $row_u['fname'];
+        $lname = $row_u['lname'];
+        $uname = $row_u['username'];
+        $classes_id = $row_u['classes_id'];
+    }
+    $strid = strval($id);//converts id to string
+    $strclasses_id = strval($classes_id);
+    if (strpos($strclasses_id, $strid) == FALSE and $teacherName != null){
+                        echo "<script>alert('you need to be enrolled to join this class');</script>";
+
+    } else {
+
+    
+?>
